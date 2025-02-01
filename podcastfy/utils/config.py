@@ -14,25 +14,25 @@ import yaml
 def get_config_path(config_file: str = 'config.yaml'):
 	"""
 	Get the path to the config.yaml file.
-	
+
 	Returns:
 		str: The path to the config.yaml file.
 	"""
 	try:
 		base_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-		
+
 		# Look for config.yaml in the package root
 		config_path = os.path.join(base_path, config_file)
 		if os.path.exists(config_path):
 			return config_path
-		
+
 		# If not found, look in the current working directory
 		config_path = os.path.join(os.getcwd(), config_file)
 		if os.path.exists(config_path):
 			return config_path
-		
+
 		raise FileNotFoundError(f"{config_file} not found")
-	
+
 	except Exception as e:
 		print(f"Error locating {config_file}: {str(e)}")
 		return None
@@ -51,12 +51,13 @@ class Config:
 			load_dotenv(dotenv_path)
 		else:
 			print("Warning: .env file not found. Using environment variables if available.")
-		
+
 		# Load API keys from environment variables
 		self.GEMINI_API_KEY: str = os.getenv("GEMINI_API_KEY", "")
 		self.OPENAI_API_KEY: str = os.getenv("OPENAI_API_KEY", "")
 		self.ELEVENLABS_API_KEY: str = os.getenv("ELEVENLABS_API_KEY", "")
-		
+		self.KOKOROS_API_KEY: str = os.getenv("KOKOROS_API_KEY", "")
+
 		config_path = get_config_path(config_file)
 		if config_path:
 			with open(config_path, 'r') as file:
@@ -64,7 +65,7 @@ class Config:
 		else:
 			print("Could not locate config.yaml")
 			self.config = {}
-		
+
 		# Set attributes based on YAML config
 		self._set_attributes()
 
@@ -124,7 +125,7 @@ def main() -> None:
 	"""
 	# Create an instance of the Config class
 	config = load_config()
-	
+
 	# Test each configuration value
 	print("Testing Config class:")
 	print(f"JINA_API_KEY: {'Set' if config.JINA_API_KEY else 'Not set'}")

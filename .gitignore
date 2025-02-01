@@ -120,4 +120,7 @@ dist/
 # Python
 *.pyc
 __pycache__/
-*.egg-info/
+*.egg-info/tests/data
+data/audio
+data/transcripts
+tests/data

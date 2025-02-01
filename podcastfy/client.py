@@ -178,12 +178,6 @@ def main(
     image_paths: List[str] = typer.Option(
         None, "--image", "-i", help="Paths to image files to process"
     ),
-    is_local: bool = typer.Option(
-        False,
-        "--local",
-        "-l",
-        help="Use a local LLM instead of a remote one (http://localhost:8080)",
-    ),
     text: str = typer.Option(
         None, "--text", "-txt", help="Raw text input to be processed"
     ),
@@ -360,7 +354,7 @@ def generate_podcast(
                 generate_audio=not transcript_only,
                 config=default_config,
                 conversation_config=conversation_config,
-                is_local=is_local,
+                llm_type=llm_type,
                 text=text,
                 model_name=llm_model_name,
                 api_key_label=api_key_label,
@@ -386,7 +380,7 @@ def generate_podcast(
                 config=default_config,
                 conversation_config=conversation_config,
                 image_paths=image_paths,
-                is_local=is_local,
+                llm_type=llm_type,
                 text=text,
                 model_name=llm_model_name,
                 api_key_label=api_key_label,
